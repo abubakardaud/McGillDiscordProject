@@ -63,7 +63,7 @@ class VerificationCog(commands.Cog):
 
         if not message.guild and not message.author.bot and self.verify_channel:
             if len(message.attachments) > 0:
-                await message = await self.verify_channel.send(f"Verification for <@{message.author.id}>\n{message.attachments[0].url}"
+                message = await self.verify_channel.send(f"Verification for <@{message.author.id}>\n{message.attachments[0].url}")
                 await message.add_reaction(accept)
                 await message.add_reaction(reject)
             else:
