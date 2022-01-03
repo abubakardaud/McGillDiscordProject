@@ -14,6 +14,7 @@ nsfw_role = "NSFW+"
 verify_channel_id = 900158437982371880
 init_message_id = 927359554348515428 
 guild_id = 449822299147862016
+log_channel_id = 900158491052900413
 
 class VerificationCog(commands.Cog):
     def __init__(self, bot):
@@ -26,6 +27,10 @@ class VerificationCog(commands.Cog):
         if not payload.guild_id == guild_id :
             return  # Reaction is on a private message
         
+        # bot self check 
+        if payload.user_id == self.bot.user.id: 
+            return 
+
         # channel check
         if not payload.channel_id == verify_channel_id:
             return 
@@ -40,7 +45,7 @@ class VerificationCog(commands.Cog):
         channel = self.bot.get_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
         
-        if not message.author.id == self.bot.id: 
+        if not message.author.id == self.bot.user.id: 
             return 
               
         if len(message.mentions) == 0:
@@ -48,10 +53,17 @@ class VerificationCog(commands.Cog):
         member = message.mentions[0]
         if str(payload.emoji) == accept:
           await member.add_roles(role, reason="NSFW Verfied by mod")
-          await member.send("You have been verfied for NSFW channels") 
+          await member.send("You have been verfied for NSFW channels.") 
+          state = "approved"
         elif str(payload.emoji) == reject: 
           await member.send("Verification was rejected please try again or DM a moderator.")
-          
+          state = "denied"
+        
+        await message.delete()
+        logChannel = self.bot.get_channel(log_channel_id)
+        await logChannel.send(f"> <@{payload.user_id}> **{state}** <@{member.id}>") 
+
+
     #dm handling
     @commands.Cog.listener()
     async def on_message(self, message):
