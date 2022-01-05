@@ -53,7 +53,7 @@ class VerificationCog(commands.Cog):
         member = message.mentions[0]
         if str(payload.emoji) == accept:
           await member.add_roles(role, reason="NSFW Verfied by mod")
-          await member.send("You have been verfied for NSFW channels.") 
+          await member.send("You have been verified for NSFW channels. The current NSFW channels include but are not limited to <#784872990751588362> and <#784876185535774741>.")
           state = "approved"
         elif str(payload.emoji) == reject: 
           await member.send("Verification was rejected please try again or DM a moderator.")
@@ -75,11 +75,13 @@ class VerificationCog(commands.Cog):
 
         if not message.guild and not message.author.bot and self.verify_channel:
             if len(message.attachments) > 0:
+                await message.author.send("A mod will now verify your age. No ID image will be kept, sent images will be deleted as soon as the verification process is done. You are now free to delete the image you sent.")
                 message = await self.verify_channel.send(f"Verification for <@{message.author.id}>\n{message.attachments[0].url}")
                 await message.add_reaction(accept)
                 await message.add_reaction(reject)
             else:
-                await message.author.send("To get the NSFW role, please send me an image of an ID as a proof that you are over 18.")
+                await message.author.send("To get the NSFW role, please send me an image of an ID as a proof that you are over 18. You can hide your name to make it anonymous.")
+                
         
 
 # The setup function below is neccesarry. Remember we give bot.add_cog() the name of the class in this case MembersCog.
