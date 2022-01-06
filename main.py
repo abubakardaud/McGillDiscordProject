@@ -1,11 +1,13 @@
 #from gitingore import SECERT
+import setuptools
+
 from discord.ext import commands #upm package(discord)
 import discord  #upm package(discord.py)
 import os
 from discord_slash import SlashCommand, SlashContext #upm package(discord_slash)
 intents = discord.Intents.all()
 
-bot = commands.Bot(command_prefix='~~',intents=intents)
+bot = commands.Bot(command_prefix='~~!~~!~~',intents=intents)
 slash = SlashCommand(bot, sync_commands=True)
 
     

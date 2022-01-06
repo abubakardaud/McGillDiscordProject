@@ -1,6 +1,15 @@
+[tool.poetry]
+name = "18chan"
+version = "0.1.0"
+description = ""
+authors = ["diego <dd@eustace.io>"]
+
 [tool.poetry.dependencies]
 python = "^3.7"
 discord = "^1.7.3"
 discord-py-interactions = "^4.0.1"
 discord-py-slash-command = "^3.0.3"
 discord.py = "^1.7.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.4"

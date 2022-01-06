@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord_slash import cog_ext, SlashContext, SlashCommand
 
 
-bot = commands.Bot(command_prefix='~')
+bot = commands.Bot(command_prefix='~~~~~!~')
 slash = SlashCommand(bot)
 
 accept = "✅"
